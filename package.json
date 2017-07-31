@@ -1,0 +1,40 @@
+{
+  "name": "c3",
+  "version": "1.0.0",
+  "description": "API based currency converter",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sdobz/cryptocurrencyconverter.git"
+  },
+  "keywords": [
+    "api",
+    "cryptocurrency",
+    "converter",
+    "react",
+    "redux"
+  ],
+  "author": "Vincent Khougaz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sdobz/cryptocurrencyconverter/issues"
+  },
+  "homepage": "https://github.com/sdobz/cryptocurrencyconverter#readme",
+  "dependencies": {
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "flow-bin": "^0.51.1",
+    "flow-typed": "^2.1.5",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-redux": "^5.0.5",
+    "redux": "^3.7.2",
+    "webpack": "^3.4.1",
+    "webpack-dev-server": "^2.6.1"
+  }
+}

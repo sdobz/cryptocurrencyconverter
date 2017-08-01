@@ -39,7 +39,7 @@ const TextField = ({ id, placeholder, value, setValue }) => (
 
 const Button = ({ onClick, disabled, children }) => (
     <div
-        className="bg-gray pa2 br-pill tc pa4 white tracked f3 fw3 pointer dim"
+        className={"bg-gray pa2 br-pill tc pa4 white tracked f3 fw3" + (disabled ? '' : ' dim pointer')}
         style={{backgroundColor: disabled ? '#BBB' : '#7D89C6'}}
         onClick={onClick}>
         {children}
@@ -48,15 +48,15 @@ const Button = ({ onClick, disabled, children }) => (
 
 const labelClass = "db ttu tracked mv3 gray f3 fw4"
 
-const CurrencyConverterComponent = ({converter, currency, amount, visible, setFrom, setTo, setAmount, show }) => (
-    <section className="pa4">
+const CurrencyConverterComponent = ({currency, amount, visible, loading, conversions, setFrom, setTo, setAmount, show }) => (
+    <section className="pa4" style={{ opacity: loading ? .1 : 1 }}>
         <div className="fl w-50 pa4">
             <label htmlFor="from-field" className={labelClass}>From</label>
             <SelectField
                 id="from-field"
                 placeholder="Select"
                 value={currency.from}
-                values={converter.getCurrencies()}
+                values={Object.keys(conversions)}
                 setValue={setFrom}/>
         </div>
         <div className="fl w-50 pa4">
@@ -65,7 +65,9 @@ const CurrencyConverterComponent = ({converter, currency, amount, visible, setFr
                 id="to-field"
                 placeholder="Select"
                 value={currency.to}
-                values={converter.getCurrencies()}
+                values={currency.from === '' ? [] :
+                    Object.keys(conversions[currency.from].quotes).map((k: string) => k.slice(currency.from.length))
+                }
                 setValue={setTo}/>
         </div>
         <div className="pa4">
@@ -83,6 +85,8 @@ const CurrencyConverterComponent = ({converter, currency, amount, visible, setFr
                 CONVERT
             </Button>
         </div>
+        <div className="fl h5" />
+        { visible &&
         <div className="ph4 pb4">
             <div className="center" style={{width: '40px'}}>
                 { /* forgive me for I have constant */ }
@@ -92,9 +96,11 @@ const CurrencyConverterComponent = ({converter, currency, amount, visible, setFr
                 </svg>
             </div>
             <div className="bg-gray w-100 pv4 br4 tc black-60 f3 tracked" style={{backgroundColor: '#BBB'}}>
-                25 BTC = 54566.30 USD
+                {amount} {currency.from} = {parseFloat(amount) * conversions[currency.from].quotes[currency.from + currency.to]} {currency.to}
             </div>
         </div>
+        }
+        <div className="cf" />
     </section>
 )
 
@@ -108,7 +114,9 @@ const mapStateToCurrencyConverterProps = (state: State) => {
             to: state.ui.toCurrency
         },
         amount: state.ui.amount,
-        visible: state.ui.resultShown
+        visible: state.ui.resultShown,
+        loading: state.api.loading,
+        conversions: state.api.conversions
     }
 }
 

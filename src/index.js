@@ -7,13 +7,14 @@
  *     This file binds the app together, triggers initial state and mounts to the DOM
  ***/
 
+import 'babel-polyfill'
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import thunkMiddleware from 'redux-thunk'
+import { createStore, applyMiddleware } from 'redux'
 
-import { converterApp } from './converter/state'
-import { ConversionService } from './converter/services'
+import { converterApp, fetchConversions } from './converter/state'
 import { CurrencyConverter } from './converter/components'
 
 if (!('config' in window)) {
@@ -21,15 +22,13 @@ if (!('config' in window)) {
 }
 else {
     // Create a store from a reducer
-    const store = createStore(converterApp)
+    const store = createStore(converterApp, applyMiddleware(thunkMiddleware))
 
-    // Instantiate and configure services
-    const converter = new ConversionService(window.config.apiBase)
     // Perform setup
-    converter.load()
+    store.dispatch(fetchConversions())
 
     render(
         <Provider store={store}>
-            <CurrencyConverter converter={converter} />
+            <CurrencyConverter />
         </Provider>, document.getElementById(window.config.mountId))
 }

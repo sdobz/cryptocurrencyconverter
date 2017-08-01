@@ -1,0 +1,9 @@
+[ignore]
+
+[include]
+
+[libs]
+
+[options]
+# Use "// $ExpectError" to suppress an error on the next line
+suppress_comment=\\(.\\|\n\\)*\\$ExpectError

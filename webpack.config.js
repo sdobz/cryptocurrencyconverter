@@ -1,3 +1,4 @@
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 var path = require('path');
 
 module.exports = {
@@ -15,9 +16,17 @@ module.exports = {
                 loader: 'babel-loader',
                 exclude: /node_modules/,
                 query: {
-                    presets: ['es2015', 'react']
+                    presets: ['es2015', 'react'],
+                    plugins: ['transform-object-rest-spread']
                 }
             }
         ]
     },
+     plugins: [
+        new CopyWebpackPlugin([
+            // {output}/file.txt
+            { from: './src/index.html' },
+            { from: './src/tachyons.css' }
+        ])
+     ]
 }

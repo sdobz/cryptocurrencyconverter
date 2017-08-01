@@ -12,9 +12,9 @@ import { combineReducers } from 'redux'
 
 // STATE TYPES - Application state is nested into a single State object
 type UiState = {
-    fromCurrency: ?string,
-    toCurrency: ?string,
-    amount: number,
+    fromCurrency: string,
+    toCurrency: string,
+    amount: string,
     resultShown: boolean
 }
 
@@ -45,20 +45,19 @@ export const showResult = (visible: boolean) => ({
 // Here I am using optional keys to represent all actions
 export type Action = {
     type: string,
-    from: ?string,
-    to: ?string,
-    amount: ?number,
-    visible: ?boolean
+    from?: string,
+    to?: string,
+    amount?: string,
+    visible?: boolean
 }
 
 // DEFAULTS - default state
 const defaultUiState: UiState = {
-    fromCurrency: null,
-    toCurrency: null,
+    fromCurrency: "",
+    toCurrency: "",
     resultShown: false,
-    amount: 0
+    amount: ""
 }
-
 
 // REDUCERS - take (sub)state and an action and produce a new state
 // State Machines are easy to reason about and test

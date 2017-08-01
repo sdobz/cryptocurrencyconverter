@@ -23,8 +23,9 @@ else {
     // Create a store from a reducer
     const store = createStore(converterApp)
 
-    // Instantiate services
+    // Instantiate and configure services
     const converter = new ConversionService(window.config.apiBase)
+    // Perform setup
     converter.load()
 
     render(

@@ -25,4 +25,6 @@ export class ConversionService {
     convert = (from: string, to: string, amount: number) => {
         return 1
     }
+
+    getCurrencies = () => this.currencies
 }
